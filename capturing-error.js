@@ -20,7 +20,12 @@ const startCapturingError = function () {
         console.log(errorMsg)
         console.log(url)
         console.log(lineNumber)
-        fetch('http://localhost:9000/api/log-error',{method:'POST',body:JSON.stringify({errorMsg,url,lineNumber}),headers:{'Content-Type':'application/json'}).then((res)=>res.json).then((jsonObj) =>  console.log(jsonObj))
+        const date = (new Date()).toString()
+        var userAgent = 'UNKNOWN'
+        if(navigator && navigator.userAgent) {
+            userAgent = navigator.userAgent
+        }
+        fetch('http://localhost:9000/api/log-error',{method:'POST',body:JSON.stringify({errorMsg,url,lineNumber,date,userAgent}),headers:{'Content-Type':'application/json'}}).then((res)=>res.json).then((jsonObj) =>  console.log(jsonObj))
         return true
     }
     console.error = (str) => {
